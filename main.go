@@ -34,6 +34,9 @@ loop:
 			if array.Contains(ARROW_KEYS, ev.Key) {
 				continue
 			}
+			if ev.Key == termbox.KeyEnter {
+				continue
+			}
 			if ev.Key == termbox.KeyBackspace || ev.Key == termbox.KeyBackspace2 {
 				if len(buffer) == 0 {
 					continue
@@ -55,7 +58,7 @@ loop:
 			termbox.Flush()
 
 			buffer = append(buffer, ev.Ch)
-			
+
 		case termbox.EventError:
 			fmt.Println(ev.Err)
 			break loop
