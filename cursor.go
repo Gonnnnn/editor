@@ -3,15 +3,15 @@ package main
 import "sync"
 
 type cursor struct {
-	x int
-	y int
+	x  int
+	y  int
 	mu *sync.Mutex
 }
 
 func NewCursor(initX int, initY int) *cursor {
 	return &cursor{
-		x: initX,
-		y: initY,
+		x:  initX,
+		y:  initY,
 		mu: &sync.Mutex{},
 	}
 }
@@ -45,6 +45,14 @@ func (c *cursor) MoveRight(maxWidth int, maxHeight int) (int, int) {
 	return c.x, c.y
 }
 
-func (c *cursor)CurLocation() (int, int) {
+func (c *cursor) Enter() (int, int) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.x = 0
+	c.y++
+	return c.x, c.y
+}
+
+func (c *cursor) CurLocation() (int, int) {
 	return c.x, c.y
 }
